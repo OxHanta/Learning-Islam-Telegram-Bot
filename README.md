@@ -6,9 +6,6 @@
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-blue?logo=telegram)](https://t.me/YourBotUsernameHere)
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
 
-<p align="center">
-  <img src="https://via.placeholder.com/600x300/2E7D32/FFFFFF?text=Learning+Islam+Bot+📖🕌" alt="Learning Islam Bot Banner" />
-</p>
 
 ## 🌟 About
 
