@@ -1,0 +1,73 @@
+<role>Experienced Telegram Bot Developer with expertise in Islamic Education and Modular Architecture</role>
+<project>Islamic Learning Telegram Bot</project>
+<tech_stack>Python 3.10, python-telegram-bot 20.0, sqlite3 for database management, and APScheduler for scheduling tasks</tech_stack>
+<file_structure>
+bot/
+main.py
+commands/
+_init_.py
+islamic_history.py
+prayer_times.py
+hadith.py
+quran.py
+utils/
+_init_.py
+database.py
+scheduler.py
+ keyboards/
+_init_.py
+inline_keyboard.py
+config.py
+requirements.txt
+README.md
+</file_structure>
+<design>
+The bot's display name will be "Islamic Learning Bot" and its username will be "@IslamicLearningBot". 
+The bot will have a profile picture with a crescent moon and a star on a green background (#008000).
+The start command will display a welcome message with a brief introduction to the bot's functionality.
+The inline keyboard will have the following buttons:
+•⁠  ⁠"Islamic History" (#6495ED)
+•⁠  ⁠"Prayer Times" (#6495ED)
+•⁠  ⁠"Hadith" (#6495ED)
+•⁠  ⁠"Quran" (#6495ED)
+Each button will have a corresponding callback data.
+The bot will use the Arial font with a size of 14px.
+The bot's messages will have a maximum width of 400px and will be centered.
+The bot will be fully responsive and will work on all devices, including desktops, tablets, and mobile phones.
+The bot will have a loading state with a spinning wheel and a "Loading..." message.
+The bot will handle errors with a "Sorry, an error occurred" message and a "Try again" button.
+</design>
+<requirements>
+1.⁠ ⁠The bot must be able to handle the following commands:
+   - /start: Displays a welcome message with a brief introduction to the bot's functionality.
+   - /help: Displays a help message with a list of available commands.
+   - /islamic_history: Displays a random Islamic history fact or biography.
+   - /prayer_times: Displays the current prayer times for the user's location.
+   - /hadith: Displays a random Hadith with its interpretation.
+   - /quran: Displays a random Quran verse with its explanation.
+2.⁠ ⁠The bot must have a modular command handler architecture.
+3.⁠ ⁠The bot must be able to handle inline keyboards with callback data.
+4.⁠ ⁠The bot must be able to store and retrieve data from a database.
+5.⁠ ⁠The bot must be able to schedule tasks using APScheduler.
+6.⁠ ⁠The bot must be fully responsive and work on all devices.
+7.⁠ ⁠The bot must have a loading state and error handling.
+8.⁠ ⁠The bot must be able to display a random question or fact about Islam when the user sends a message.
+</requirements>
+<constraints>
+1.⁠ ⁠The bot must not use any external APIs for Islamic history, Hadith, or Quran data.
+2.⁠ ⁠The bot must not use any machine learning algorithms for generating Islamic content.
+3.⁠ ⁠The bot must not have any ads or promotional content.
+4.⁠ ⁠The bot must not collect any user data except for the user's location for prayer times.
+5.⁠ ⁠The bot must not have any NSFW or sensitive content.
+</constraints>
+<output_instructions>
+1.⁠ ⁠Create a new Python project using the python-telegram-bot library.
+2.⁠ ⁠Create a new file for each command and keyboard.
+3.⁠ ⁠Create a database using sqlite3 to store and retrieve data.
+4.⁠ ⁠Implement the command handler architecture.
+5.⁠ ⁠Implement the inline keyboard with callback data.
+6.⁠ ⁠Implement the scheduling of tasks using APScheduler.
+7.⁠ ⁠Implement the loading state and error handling.
+8.⁠ ⁠Test the bot thoroughly and deploy it to a production environment.
+9.⁠ ⁠Continuously update and improve the bot's content and functionality.
+</output_instructions>
