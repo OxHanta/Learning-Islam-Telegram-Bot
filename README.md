@@ -25,6 +25,6 @@ Whether you're a complete beginner or looking to deepen your knowledge, the bot 
 
 ## 🚀 Demo
 
-Just search for the bot on Telegram:
+Just search for the bot on Telegram or click the link below:
 
 → [@LearningIslamBot](https://t.me/LearningIslamBot)
