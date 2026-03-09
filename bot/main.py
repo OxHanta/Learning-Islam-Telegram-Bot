@@ -17,7 +17,7 @@ from bot.commands.islamic_history import islamic_history_command, islamic_histor
 from bot.commands.prayer_times import prayer_times_command, prayer_times_callback, city_selection_callback
 from bot.commands.hadith import hadith_command, hadith_callback
 from bot.commands.quran import quran_command, quran_callback
-from bot.commands.random_fact import random_fact_callback, handle_message
+from bot.commands.random_fact import random_fact_callback, handle_message, reset_command
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -33,7 +33,7 @@ async def error_handler(update: object, context):
         from bot.keyboards.inline_keyboard import retry_keyboard
         try:
             await update.effective_message.reply_text(
-                "❌ Sorry, an error occurred. Please try again.",
+                "Sorry, an error occurred. Please try again.",
                 reply_markup=retry_keyboard(),
             )
         except Exception:
@@ -52,6 +52,7 @@ def main():
 
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("reset", reset_command))
     app.add_handler(CommandHandler("islamic_history", islamic_history_command))
     app.add_handler(CommandHandler("prayer_times", prayer_times_command))
     app.add_handler(CommandHandler("hadith", hadith_command))

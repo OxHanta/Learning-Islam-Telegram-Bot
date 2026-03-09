@@ -1,5 +1,4 @@
 import sqlite3
-import random
 from bot.config import DATABASE_PATH
 
 

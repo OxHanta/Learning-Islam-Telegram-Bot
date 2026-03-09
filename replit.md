@@ -48,10 +48,20 @@ requirements.txt
 - `/prayer_times` — Prayer times by city selection
 - `/hadith` — Random authenticated hadith with interpretation
 - `/quran` — Random Quran verse with explanation
-- Any text message → Random Islamic fact
+- `/reset` — Clear conversation history
+- Any text message → AI answer with conversation memory
+
+## AI Conversations
+- Uses Replit AI Integrations (OpenAI-compatible) — no personal API key required
+- Per-user conversation history stored in memory (last 20 messages)
+- Islamic Scholar system prompt keeps answers focused and accurate
+- `/reset` command clears a user's conversation history
+- All free-form text messages are routed to the AI
 
 ## Environment Variables
 - `TELEGRAM_BOT_TOKEN` — Required. Telegram Bot API token from @BotFather
+- `AI_INTEGRATIONS_OPENAI_API_KEY` — Auto-set by Replit AI Integrations
+- `AI_INTEGRATIONS_OPENAI_BASE_URL` — Auto-set by Replit AI Integrations
 
 ## Running the Bot
 ```bash
