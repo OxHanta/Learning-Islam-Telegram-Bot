@@ -27,4 +27,4 @@ Whether you're a complete beginner or looking to deepen your knowledge, the bot 
 
 Just search for the bot on Telegram:
 
-→ @LearningIslamBot
+→ [@LearningIslamBot](https://t.me/LearningIslamBot)
