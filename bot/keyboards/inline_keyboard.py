@@ -12,7 +12,11 @@ def main_menu_keyboard() -> InlineKeyboardMarkup:
             InlineKeyboardButton("🌙 Quran", callback_data="quran"),
         ],
         [
+            InlineKeyboardButton("🧠 Islamic Quiz", callback_data="quiz"),
             InlineKeyboardButton("❓ Random Fact", callback_data="random_fact"),
+        ],
+        [
+            InlineKeyboardButton("🔔 Daily Reminders", callback_data="reminders_menu"),
         ],
     ]
     return InlineKeyboardMarkup(keyboard)

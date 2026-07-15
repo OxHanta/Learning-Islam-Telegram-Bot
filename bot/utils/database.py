@@ -58,6 +58,26 @@ def init_db():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS quizzes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question TEXT NOT NULL,
+            option_a TEXT NOT NULL,
+            option_b TEXT NOT NULL,
+            option_c TEXT NOT NULL,
+            option_d TEXT NOT NULL,
+            correct_option TEXT NOT NULL,
+            explanation TEXT NOT NULL
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS subscribers (
+            user_id INTEGER PRIMARY KEY,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
     _seed_data(cursor)
     conn.commit()
     conn.close()
@@ -133,6 +153,22 @@ def _seed_data(cursor):
         ]
         cursor.executemany("INSERT INTO islamic_facts (fact) VALUES (?)", facts)
 
+    cursor.execute("SELECT COUNT(*) FROM quizzes")
+    if cursor.fetchone()[0] == 0:
+        quiz_data = [
+            ("Which Prophet is mentioned the most times by name in the Holy Quran?", "Prophet Muhammad (PBUH)", "Prophet Ibrahim (AS)", "Prophet Musa (AS)", "Prophet Isa (AS)", "C", "Prophet Musa (AS) is mentioned by name 136 times in the Holy Quran, making him the most mentioned Prophet in the text."),
+            ("What was the first Surah of the Holy Quran to be revealed?", "Al-Fatiha", "Al-Alaq", "Al-Ikhlas", "Al-Baqarah", "B", "The first five verses of Surah Al-Alaq (Chapter 96) were the first verses revealed to Prophet Muhammad (PBUH) in the Cave of Hira by Angel Jibreel."),
+            ("How many chapters (Surahs) are there in the Holy Quran?", "114", "120", "99", "30", "A", "The Holy Quran consists of 114 Surahs, starting with Surah Al-Fatiha and ending with Surah An-Nas. It is also divided into 30 equal parts called Juz'."),
+            ("Who was the first Caliph of Islam after the passing of Prophet Muhammad (PBUH)?", "Umar ibn al-Khattab (RA)", "Uthman ibn Affan (RA)", "Ali ibn Abi Talib (RA)", "Abu Bakr al-Siddiq (RA)", "D", "Abu Bakr al-Siddiq (RA) was chosen as the first Righteously Guided Caliph (Rashidun) of Islam. He ruled for about two years, unifying the Muslim community."),
+            ("What is the primary meaning of the word 'Tawhid' in Islamic theology?", "The belief in Angels", "The Oneness and Unity of Allah", "The obligation of daily prayer", "The history of Islamic civilization", "B", "Tawhid is the defining doctrine of Islam. It declares the absolute oneness and uniqueness of Allah as the sole Creator, Sustainer, and Lord of the universe."),
+            ("In which Islamic month is fasting (Sawm) obligatory upon every healthy, adult Muslim?", "Muharram", "Rajab", "Ramadan", "Dhul-Hijjah", "C", "Ramadan is the ninth month of the Islamic lunar calendar. Fasting during Ramadan is one of the Five Pillars of Islam, commemorating the first revelation of the Quran."),
+            ("Which battle was the first major military confrontation between Muslims of Medina and the Quraish of Mecca?", "The Battle of Uhud", "The Battle of Badr", "The Battle of the Trench", "The Battle of Hunayn", "B", "The Battle of Badr took place in 2 AH (624 CE). Despite being outnumbered 3 to 1, the Muslims achieved a miraculous and decisive victory, which is celebrated in the Quran."),
+            ("What is the name of the Prophet's night journey from Mecca to Jerusalem and ascension to the heavens?", "The Hijra", "The Hajj", "Isra' and Mi'raj", "The Fath", "C", "Isra' and Mi'raj are the two parts of a miraculous journey that Prophet Muhammad (PBUH) took in one night. During this journey, the five daily prayers (Salah) were made obligatory."),
+            ("Which companion is known as the 'Sword of Allah' (Saifullah)?", "Khalid ibn al-Walid (RA)", "Hamza ibn Abdul-Muttalib (RA)", "Sa'd ibn Abi Waqqas (RA)", "Ali ibn Abi Talib (RA)", "A", "Khalid ibn al-Walid (RA) was given the title 'Saifullah' (Sword of Allah) by Prophet Muhammad (PBUH) because of his extraordinary military genius and bravery in battle."),
+            ("Which female scholar and wife of the Prophet (PBUH) narrated over 2,200 Hadiths?", "Khadijah bint Khuwaylid (RA)", "Aisha bint Abu Bakr (RA)", "Hafsa bint Umar (RA)", "Umm Salama (RA)", "B", "Aisha bint Abu Bakr (RA) was a brilliant scholar, jurist, and teacher. She narrated 2,210 Hadiths, making her one of the most prolific sources of early Islamic knowledge.")
+        ]
+        cursor.executemany("INSERT INTO quizzes (question, option_a, option_b, option_c, option_d, correct_option, explanation) VALUES (?, ?, ?, ?, ?, ?, ?)", quiz_data)
+
 
 def get_random_history():
     conn = get_connection()
@@ -189,3 +225,93 @@ def get_user_location(user_id: int):
     row = cursor.fetchone()
     conn.close()
     return row["city"] if row else None
+
+
+def get_random_quiz():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM quizzes ORDER BY RANDOM() LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def get_quiz_by_id(quiz_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM quizzes WHERE id = ?", (quiz_id,))
+    row = cursor.fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def add_subscriber(user_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT OR IGNORE INTO subscribers (user_id) VALUES (?)", (user_id,))
+    conn.commit()
+    conn.close()
+
+
+def remove_subscriber(user_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM subscribers WHERE user_id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+
+
+def is_subscribed(user_id: int) -> bool:
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT 1 FROM subscribers WHERE user_id = ?", (user_id,))
+    row = cursor.fetchone()
+    conn.close()
+    return row is not None
+
+
+def get_all_subscribers():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_id FROM subscribers")
+    rows = cursor.fetchall()
+    conn.close()
+    return [row["user_id"] for row in rows]
+
+
+def search_database(keyword: str) -> dict:
+    """
+    Search the database for a keyword in Quran verses, Hadiths, or Islamic history.
+    Returns a dict with matches from each table.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Quran Search
+    cursor.execute(
+        "SELECT * FROM quran_verses WHERE translation LIKE ? OR explanation LIKE ? OR surah_name LIKE ? LIMIT 3",
+        (f"%{keyword}%", f"%{keyword}%", f"%{keyword}%")
+    )
+    quran_matches = [dict(r) for r in cursor.fetchall()]
+    
+    # Hadith Search
+    cursor.execute(
+        "SELECT * FROM hadiths WHERE text LIKE ? OR interpretation LIKE ? OR narrator LIKE ? LIMIT 3",
+        (f"%{keyword}%", f"%{keyword}%", f"%{keyword}%")
+    )
+    hadith_matches = [dict(r) for r in cursor.fetchall()]
+    
+    # History Search
+    cursor.execute(
+        "SELECT * FROM islamic_history WHERE title LIKE ? OR content LIKE ? LIMIT 3",
+        (f"%{keyword}%", f"%{keyword}%")
+    )
+    history_matches = [dict(r) for r in cursor.fetchall()]
+    
+    conn.close()
+    
+    return {
+        "quran": quran_matches,
+        "hadith": hadith_matches,
+        "history": history_matches,
+    }

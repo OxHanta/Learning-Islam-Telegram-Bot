@@ -5,7 +5,7 @@ from bot.keyboards.inline_keyboard import main_menu_keyboard
 
 WELCOME_MESSAGE = """🌙 As-salamu alaykum! Welcome to Islamic Learning Bot 🌙
 
-I am your AI-powered companion for Islamic knowledge and learning.
+I am your companion for Islamic knowledge and learning.
 
 You can talk to me naturally — ask me any question about Islam and I will do my best to give you a thorough, accurate answer. Here are some things you can ask:
 
@@ -15,14 +15,17 @@ You can talk to me naturally — ask me any question about Islam and I will do m
 • "How do I perform Wudu?"
 • "Explain the concept of Tawakkul"
 
-You can also use the menu buttons below to explore specific topics:
+You can also use the menu buttons below or commands to explore specific topics:
 
 📜 Islamic History — Key events, battles and personalities
 🕌 Prayer Times — Accurate prayer times for major cities
 📖 Hadith — Authenticated hadith with interpretations
 🌙 Quran — Verses with Arabic, translation and explanation
+🧠 Islamic Quiz — Interactive multiple-choice quizzes to test your knowledge!
 ❓ Random Fact — An interesting Islamic fact from the AI
+🔔 Daily Reminders — Subscribe to get a daily verse and Hadith in the morning
 
+🔍 Search the database at any time using `/search <keyword>`!
 Type /reset at any time to start a fresh conversation.
 
 May Allah bless your learning journey. Ameen 🤲"""
@@ -48,6 +51,11 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 Available Commands:
 /start — Show the main menu and welcome message
 /help — Show this help guide
+/search <keyword> — Search the database (Quran, Hadith, History) or ask AI if not found
+/quiz — Start an interactive multiple-choice Islamic quiz
+/reminders — View daily reminder subscription status
+/subscribe — Subscribe to daily Quran & Hadith reminders
+/unsubscribe — Unsubscribe from daily reminders
 /islamic_history — Get a random Islamic history entry
 /prayer_times — Get prayer times for a city
 /hadith — Get a random authenticated Hadith
