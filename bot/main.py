@@ -18,6 +18,16 @@ from bot.commands.prayer_times import prayer_times_command, prayer_times_callbac
 from bot.commands.hadith import hadith_command, hadith_callback
 from bot.commands.quran import quran_command, quran_callback
 from bot.commands.random_fact import random_fact_callback, handle_message, reset_command
+from bot.commands.quiz import quiz_command, quiz_callback, quiz_option_callback, quiz_next_callback
+from bot.commands.reminders import (
+    subscribe_command,
+    unsubscribe_command,
+    reminders_command,
+    reminders_menu_callback,
+    reminders_subscribe_callback,
+    reminders_unsubscribe_callback,
+)
+from bot.commands.search import search_command
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -57,12 +67,23 @@ def main():
     app.add_handler(CommandHandler("prayer_times", prayer_times_command))
     app.add_handler(CommandHandler("hadith", hadith_command))
     app.add_handler(CommandHandler("quran", quran_command))
+    app.add_handler(CommandHandler("quiz", quiz_command))
+    app.add_handler(CommandHandler("reminders", reminders_command))
+    app.add_handler(CommandHandler("subscribe", subscribe_command))
+    app.add_handler(CommandHandler("unsubscribe", unsubscribe_command))
+    app.add_handler(CommandHandler("search", search_command))
 
     app.add_handler(CallbackQueryHandler(islamic_history_callback, pattern="^islamic_history$"))
     app.add_handler(CallbackQueryHandler(prayer_times_callback, pattern="^prayer_times$"))
     app.add_handler(CallbackQueryHandler(hadith_callback, pattern="^hadith$"))
     app.add_handler(CallbackQueryHandler(quran_callback, pattern="^quran$"))
     app.add_handler(CallbackQueryHandler(random_fact_callback, pattern="^random_fact$"))
+    app.add_handler(CallbackQueryHandler(quiz_callback, pattern="^quiz$"))
+    app.add_handler(CallbackQueryHandler(quiz_option_callback, pattern="^quiz_opt_"))
+    app.add_handler(CallbackQueryHandler(quiz_next_callback, pattern="^quiz_next$"))
+    app.add_handler(CallbackQueryHandler(reminders_menu_callback, pattern="^reminders_menu$"))
+    app.add_handler(CallbackQueryHandler(reminders_subscribe_callback, pattern="^reminders_sub$"))
+    app.add_handler(CallbackQueryHandler(reminders_unsubscribe_callback, pattern="^reminders_unsub$"))
     app.add_handler(CallbackQueryHandler(city_selection_callback, pattern="^city_"))
     app.add_handler(CallbackQueryHandler(start_command, pattern="^main_menu$"))
 
@@ -70,7 +91,7 @@ def main():
 
     app.add_error_handler(error_handler)
 
-    start_scheduler()
+    start_scheduler(app.bot)
     logger.info("Islamic Learning Bot started. Polling for updates...")
 
     app.run_polling(allowed_updates=Update.ALL_TYPES)

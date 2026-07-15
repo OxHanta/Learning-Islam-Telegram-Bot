@@ -1,6 +1,4 @@
-def main():
-    print("Hello from repl-nix-workspace!")
-
+from bot.main import main
 
 if __name__ == "__main__":
     main()

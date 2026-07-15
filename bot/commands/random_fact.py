@@ -42,9 +42,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         logger.error(f"AI error for user {user_id}: {e}")
         error_msg = str(e)
-        if "FREE_CLOUD_BUDGET_EXCEEDED" in error_msg:
+        if "FREE_CLOUD_BUDGET_EXCEEDED" in error_msg or "insufficient_quota" in error_msg or "quota_exceeded" in error_msg:
             await thinking_msg.edit_text(
-                "Your cloud AI budget has been exceeded. Please check your Replit account.",
+                "The AI usage limit or quota has been exceeded. Please check your API key status or try again later.",
                 reply_markup=retry_keyboard(),
             )
         else:

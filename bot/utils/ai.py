@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 # the newest OpenAI model is "gpt-5" which was released August 7, 2025.
 # do not change this unless explicitly requested by the user
-MODEL = "gpt-5"
+MODEL = os.environ.get("OPENAI_MODEL", "gpt-5")
 
 SYSTEM_PROMPT = """You are an Islamic Learning Assistant — a knowledgeable, friendly, and respectful guide to Islamic knowledge.
 
@@ -55,9 +55,12 @@ def clear_history(user_id: int):
 def ask_ai(user_id: int, user_message: str) -> str:
     add_to_history(user_id, "user", user_message)
 
+    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY")
+    base_url = os.environ.get("OPENAI_BASE_URL") or os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
+
     client = OpenAI(
-        api_key=os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY"),
-        base_url=os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL"),
+        api_key=api_key,
+        base_url=base_url if base_url else None,
     )
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}] + get_history(user_id)
